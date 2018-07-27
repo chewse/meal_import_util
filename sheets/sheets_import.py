@@ -1,5 +1,6 @@
 from google.oauth2 import service_account
 from googleapiclient import discovery
+import sys
 
 
 class SheetsImporter:
@@ -64,18 +65,23 @@ class SheetsImporter:
         """
         for file in sheet_files:
             values = self.get_sheet_range_output(file, range)
-            print("File : " + file['name'])
+            print("\nFile : " + file['name'])
             for row in values:
                 print(row)
+            print("\n")
 
 
 if __name__ == '__main__':
+    if sys.argv[1]:
+        g_cred_file = sys.argv[1]
+        # '/Users/solomon/CHEWSE/sheets_import/credential_key.json'
 
-    g_cred_file = '/Users/solomon/CHEWSE/sheets_import/credential_key.json'
+        sheets_importer = SheetsImporter(g_cred_file)
+        g_sheet_files = sheets_importer.get_google_sheet_files()
+        sheets_importer.list_sheet_contents(g_sheet_files, "Sheet1")
 
-    sheets_importer = SheetsImporter(cred_file)
-    g_sheet_files = sheets_importer.get_google_sheet_files()
-    sheets_importer.list_sheet_contents(g_sheet_files, "Sheet1")
+    else:
+        print("Provide a credentials file ")
 
 
 
