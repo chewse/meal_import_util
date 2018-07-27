@@ -44,6 +44,24 @@ class SheetsImporter:
                 sheet_files.append(f)
         return sheet_files
 
+    def get_google_all_sheets_and_contents(self, sheet_file):
+        """
+        Get all sheets in this file and print out their values
+        :param sheet_file: the file whose content is to be picked
+        """
+        sheets_service = self.services['sheets_service']
+        workbook = sheets_service.spreadsheets().get(spreadsheetId=sheet_file['id']).execute()
+        all_sheets = workbook.get('sheets', '')
+        print("\nFile : " + sheet_file['name'])
+        for sheet in all_sheets:
+            title = sheet.get("properties", {}).get("title", "Sheet1")
+            values = self.get_sheet_range_output(sheet_file, title)
+            print("\n\tSheet : " + title)
+            for row in values:
+                print(row)
+            print("\n")
+
+
     def get_sheet_range_output(self, sheet_file, range):
         """
         Get the values in the range of the provided sheets file
@@ -56,19 +74,14 @@ class SheetsImporter:
         values = result.get('values', [])
         return values
 
-    def list_sheet_contents(self, sheet_files, range):
+    def list_sheet_contents(self, sheet_files):
         """
         List contents of files with the range provided
-        :param sheet_files:
-        :param range: rows and columns to be returned
+        :param sheet_files: list of google sheets files
         :return:
         """
         for file in sheet_files:
-            values = self.get_sheet_range_output(file, range)
-            print("\nFile : " + file['name'])
-            for row in values:
-                print(row)
-            print("\n")
+            self.get_google_all_sheets_and_contents(file)
 
 
 if __name__ == '__main__':
@@ -78,7 +91,7 @@ if __name__ == '__main__':
 
         sheets_importer = SheetsImporter(g_cred_file)
         g_sheet_files = sheets_importer.get_google_sheet_files()
-        sheets_importer.list_sheet_contents(g_sheet_files, "Sheet1")
+        sheets_importer.list_sheet_contents(g_sheet_files)
 
     else:
         print("Provide a credentials file ")
