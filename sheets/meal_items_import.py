@@ -3,6 +3,7 @@ Meal item import related classes & functions
 """
 from sheets.sheets_import import SheetsImporter
 from sheets.import_models import MealItem
+from sheets import utils
 
 class MealItemImporter(SheetsImporter):
     """Class for acccesing meal item export functionality"""
@@ -10,13 +11,16 @@ class MealItemImporter(SheetsImporter):
     def __init__(self, cred_file):
         super(MealItemImporter, self).__init__(cred_file)
 
-    def get_meal_items_from_file(self, file_url):
+    def get_meal_items_from_file(self, file_url, sheet_id):
         """
         Provided with a Google sheet file, get and return a list of meal items
-        :param file_url:
+        :param file_url: The URL to the Google sheet file
+        :param sheet_id: The ID of the sheet to import data from
         :return:
         """
-        values = self.get_sheet_range_output(file_url, "Item List")
+        sheet = {}
+        sheet['id'] = utils.get_sheet_id_from_url(file_url)
+        values = self.get_sheet_range_output(sheet, sheet_id)
         meal_items = self.get_meal_items_from_values(values)
         return meal_items
 

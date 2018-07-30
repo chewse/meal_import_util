@@ -2,6 +2,7 @@
 This module will contain models that will serve as the output items of an import run on the Google sheets
 """
 
+
 class MealItem:
     """Data model for a meal item record"""
 
@@ -10,6 +11,7 @@ class MealItem:
         Pass in a list of values that this instance of MealItem will be built from
         :param values:
         """
+        self.raw_data = values
         self.visible = values[0].strip()
         self.meal_buckets = values[1].strip()
         self.meal_components = values[2].strip()
@@ -26,7 +28,9 @@ class MealItem:
         #self.serving_utencil1 = values[13].strip()
         #self.serving_utencil2 = values[14].strip()
         #self.serving_utencil3 = values[15].strip()
+        #TODO : Discuss the padding of empty cells with empty strings to prevent index issues with import
 
     def __str__(self):
         return self.vendor_facing_name
+
 
