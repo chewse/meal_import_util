@@ -10,22 +10,22 @@ class MealItem:
         Pass in a list of values that this instance of MealItem will be built from
         :param values:
         """
-        self.visible = values[0]
-        self.meal_buckets = values[1]
-        self.meal_components = values[2]
-        self.vendor_facing_name = values[3]
-        self.client_facing_name = values[4]
-        self.parent_item = values[5]
-        self.description = values[6]
-        self.portion_quantity = values[7]
-        self.portion_unit = values[8]
-        self.unit_cost = values[9]
-        self.msrp = values[10]
-        self.food_label = values[11]
-        self.ingredients = values[12]
-        self.serving_utencil1 = values[13]
-        self.serving_utencil2 = values[14]
-        self.serving_utencil3 = values[15]
+        self.visible = values[0].strip()
+        self.meal_buckets = values[1].strip()
+        self.meal_components = values[2].strip()
+        self.vendor_facing_name = values[3].strip()
+        self.client_facing_name = values[4].strip()
+        self.parent_item = values[5].strip()
+        self.description = values[6].strip()
+        self.portion_quantity = values[7].strip()
+        self.portion_unit = values[8].strip()
+        self.unit_cost = values[9].strip()
+        self.msrp = values[10].strip()
+        self.food_label = values[11].strip()
+        #self.ingredients = values[12].strip()
+        #self.serving_utencil1 = values[13].strip()
+        #self.serving_utencil2 = values[14].strip()
+        #self.serving_utencil3 = values[15].strip()
 
     def __str__(self):
         return self.vendor_facing_name
