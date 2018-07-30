@@ -71,20 +71,6 @@ class SheetsImporter:
             print("\n")
 
 
-if __name__ == '__main__':
-    if sys.argv[1]:
-        g_cred_file = sys.argv[1]
-        # '/Users/solomon/CHEWSE/sheets_import/credential_key.json'
-
-        sheets_importer = SheetsImporter(g_cred_file)
-        g_sheet_files = sheets_importer.get_google_sheet_files()
-        sheets_importer.list_sheet_contents(g_sheet_files, "Sheet1")
-
-    else:
-        print("Provide a credentials file ")
-
-
-
 
 
 
